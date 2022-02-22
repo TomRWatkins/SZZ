@@ -67,15 +67,14 @@ public class Application {
 		}
 		System.out.println("Total Bug Introducing Commits: " + total);
 			
-		
+		//Days of the week
 		int[] days = new int[7];
 		for(int i = 0; i < days.length; i++) days[i] = 0;
 		for(Link link: bugIntroducingCommits) {
 			for (Suspect suspect : link.getBugIntroducingCommits().values()) {
 				days[(int)(Math.floor(suspect.getDate() / 86400) + 4) % 7] ++;
 			}
-		}
-		
+		}		
 		System.out.println("Monday: " + days[1]);
 		System.out.println("Tuesday: " + days[2]);
 		System.out.println("Wednesday: " + days[3]);

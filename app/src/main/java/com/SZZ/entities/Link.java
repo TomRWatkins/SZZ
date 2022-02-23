@@ -60,7 +60,7 @@ public class Link {
 	 */
 	public void calculateBugIntroducingSuspects(GitUtil gitUtil) {
 		for(AffectedFile file: this.commit.getFiles()) {				
-			if(file.getPath().substring(file.getPath().length()-5, file.getPath().length()).equals(".java")) {
+			if(file.getPath().contains(".java")) {
 				//Get diff between this commit and previous commit
 				String diff = gitUtil.getDiff(this.commit.getHash(), file.getPath());
 				if(diff.equals(""))	break;
@@ -79,9 +79,9 @@ public class Link {
 				else
 					break;
 				
-				//Filter each line to potentially add a suspect
+				//Filter each line then potentially add a suspect
 				for(BlameLine line: blamedLines) {					
-					if(this.bugIntroducingCommits.get(line.getHash()) != null) break;					
+					if(this.bugIntroducingCommits.get(line.getHash()) != null) break;	// TAKE OUT TO COUNT LINES			
 					if(line.getDate() > this.bug.getCreatedDate()) break;
 					if(this.getCommit().getTimeStamp() - line.getDate() > 63000000) break;
 					String regex = "^\\/\\/.*|^\\*.*|^\\/\\*.*|^\\s*\\/\\/.*|^\\s*\\*.*|^\\s*\\/\\*.*";					

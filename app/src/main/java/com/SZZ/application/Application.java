@@ -60,14 +60,12 @@ public class Application {
 		//Get Bug Introducing Commits from bug fixing commits
 		ArrayList<Link> bugIntroducingCommits = gMiner.calculateBugIntroducingCommits(bugFixingCommits);
 		int total = 0;
-		for(Link link: bugIntroducingCommits) {
-			for (Suspect suspect : link.getBugIntroducingCommits().values()) {				
-				total++;
-			}
-		}
+		for(Link link: bugIntroducingCommits) 							
+				total+=link.getBugIntroducingCommits().size();			
+		
 		System.out.println("Total Bug Introducing Commits: " + total);
 			
-		//Days of the week
+		//Days of the week calculated using epoch --> day formula
 		int[] days = new int[7];
 		for(int i = 0; i < days.length; i++) days[i] = 0;
 		for(Link link: bugIntroducingCommits) {
@@ -75,6 +73,7 @@ public class Application {
 				days[(int)(Math.floor(suspect.getDate() / 86400) + 4) % 7] ++;
 			}
 		}		
+		System.out.println("Bug Introducing Commits on each day:");
 		System.out.println("Monday: " + days[1]);
 		System.out.println("Tuesday: " + days[2]);
 		System.out.println("Wednesday: " + days[3]);

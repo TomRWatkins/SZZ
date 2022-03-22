@@ -52,34 +52,30 @@ public class Application {
 		ArrayList<Commit> commits = gMiner.mineGit();
 		System.out.println("Total Commits List: " + commits.size());
 		
+		
 		//Get Bug Fixing Commits
 		LinkConnector connector = new LinkConnector(issues, commits, jiraKey);
 		ArrayList<Link> bugFixingCommits = connector.getBugFixingCommits();
 		System.out.println("Total Bug Fixing Commits: " + bugFixingCommits.size());
-				
+		
 		//Get Bug Introducing Commits from bug fixing commits
 		ArrayList<Link> bugIntroducingCommits = gMiner.calculateBugIntroducingCommits(bugFixingCommits);
+		
+		
+		
 		int total = 0;
 		for(Link link: bugIntroducingCommits) 							
 				total+=link.getBugIntroducingCommits().size();			
 		
 		System.out.println("Total Bug Introducing Commits: " + total);
-			
-		//Days of the week calculated using epoch --> day formula
-		int[] days = new int[7];
-		for(int i = 0; i < days.length; i++) days[i] = 0;
-		for(Link link: bugIntroducingCommits) {
-			for (Suspect suspect : link.getBugIntroducingCommits().values()) {
-				days[(int)(Math.floor(suspect.getDate() / 86400) + 4) % 7] ++;
-			}
-		}		
-		System.out.println("Bug Introducing Commits on each day:");
-		System.out.println("Monday: " + days[1]);
-		System.out.println("Tuesday: " + days[2]);
-		System.out.println("Wednesday: " + days[3]);
-		System.out.println("Thursday: " + days[4]);
-		System.out.println("Friday: " + days[5]);
-		System.out.println("Saturday: " + days[6]);
-		System.out.println("Sunday: " + days[0]);		
+//			
+//		//Days of the week calculated using epoch --> day formula
+//		int[] days = new int[7];
+//		for(int i = 0; i < days.length; i++) days[i] = 0;
+//		for(Link link: bugIntroducingCommits) {
+//			for (Suspect suspect : link.getBugIntroducingCommits().values()) {
+//				days[(int)(Math.floor(suspect.getDate() / 86400) + 4) % 7] ++;
+//			}
+//		}	
 	}
 }

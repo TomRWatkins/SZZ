@@ -90,7 +90,7 @@ public class Link {
 				    if(matcher.find()) break;
 				    if(line.getContent().trim().isEmpty()) break;				
 					
-					//Add a new suspect and add to bug fixing commit list
+					//Add a new suspect and add to bug fixing commit list of BIC
 					this.bugIntroducingCommits.put(line.getHash(), new Suspect(line.getHash(),line.getAuthor(),line.getDate(),file.getPath()));
 				}				
 			}
@@ -121,7 +121,8 @@ public class Link {
 	private int calculateSyntacticConfidence() {		
 		int confidence = 0;		
 		
-		if(this.bug.getIssueKey() != null) confidence++;
+		if(this.bug.getIssueKey() != null) 
+			confidence++;
 	
 		String keywordsRegex = "defects?|patch|bugs?|fix(e[ds])?";		
 		Pattern keywords = Pattern.compile(keywordsRegex, Pattern.CASE_INSENSITIVE);		

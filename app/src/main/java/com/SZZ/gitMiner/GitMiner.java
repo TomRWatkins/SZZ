@@ -52,8 +52,8 @@ public class GitMiner {
 	}
 
 	/**
-	 * Generates an array list of commits from obtained git logs.
-	 * @param logs obtained git logs of git repository
+	 * Generates an array list of commits from git logs.
+	 * @param logs git logs for git repository
 	 * @return	array list of commits
 	 */
 	private ArrayList<Commit> generateCommits(Iterable<RevCommit> logs) {

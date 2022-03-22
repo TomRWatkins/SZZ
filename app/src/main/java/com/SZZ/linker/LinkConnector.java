@@ -53,7 +53,7 @@ public class LinkConnector {
 	/**
 	 * Calculates the bug fixing commits creating links between issues and commits. Ensures to 
 	 * generate an outlier boundary to ignore commits that affect too many files. Also doesn't 
-	 * consider commits that don't have a Jira bug within it's commit message.
+	 * consider commits that do not have a Jira bug key within it's commit message.
 	 * @return the list of bug fixing commits
 	 */
 	public ArrayList<Link> getBugFixingCommits() {
@@ -78,7 +78,7 @@ public class LinkConnector {
 			if(this.issues.get(commit.getBugIDLink()) != null) 
 				this.bugFixingLinks.add(new Link(this.issues.get(commit.getBugIDLink()), commit));			
 		}
-						
+		
 		//Only consider links that satisfy sem > 1 ∨ (sem = 1 ∧ syn > 0)
 		ArrayList<Link> tempLinks = new ArrayList<>();
 		for(Link link: this.bugFixingLinks) {

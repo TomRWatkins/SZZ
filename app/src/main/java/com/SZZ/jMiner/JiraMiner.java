@@ -78,8 +78,8 @@ public class JiraMiner {
 			File file = new File(fileName);
 			try {			
 				String num = Integer.toString(i * 1000);
-				String tQuery = this.mainQuery.replace("{0}", num);
-				this.url = new URL(this.jiraIssuesUrl + this.jiraQuery + tQuery);
+				String tempQuery = this.mainQuery.replace("{0}", num);
+				this.url = new URL(this.jiraIssuesUrl + this.jiraQuery + tempQuery);
 				
 				this.con = url.openConnection();
 				this.document = docFromStream(this.con.getInputStream());

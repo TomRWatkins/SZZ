@@ -13,6 +13,8 @@ package com.SZZ.application;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.PropertyConfigurator;
 
 import com.SZZ.entities.Bug;
@@ -58,17 +60,23 @@ public class Application {
 		ArrayList<Link> bugFixingCommits = connector.getBugFixingCommits();
 		System.out.println("Total Bug Fixing Commits: " + bugFixingCommits.size());
 		
+		
 		//Get Bug Introducing Commits from bug fixing commits
 		ArrayList<Link> bugIntroducingCommits = gMiner.calculateBugIntroducingCommits(bugFixingCommits);
 		
 		
+		//Extract bug-introducing commits and remove duplicates
+		HashMap<String, Integer> fixInducingCommits = new HashMap<>();		
+		for(Link link: bugIntroducingCommits) {	
+			for (Map.Entry<String, Suspect> entry : link.getBugIntroducingCommits().entrySet()) {
+				fixInducingCommits.put(entry.getValue().getHash(),1);		  
+			}
+		}
+		System.out.println("Total Fix Inducing Commits: " + fixInducingCommits.size());
 		
-		int total = 0;
-		for(Link link: bugIntroducingCommits) 							
-				total+=link.getBugIntroducingCommits().size();			
+		//Experiments exp = new Experiments(commits, bugFixingCommits, bugIntroducingCommits);
 		
-		System.out.println("Total Bug Introducing Commits: " + total);
-//			
+		
 //		//Days of the week calculated using epoch --> day formula
 //		int[] days = new int[7];
 //		for(int i = 0; i < days.length; i++) days[i] = 0;

@@ -68,8 +68,8 @@ public class LinkConnector {
 		int outlier = filesAffected.get(filesAffected.size()/2) * 5;
 		
 		//Filter commits that don't have issue numbers within commit message AND filter commits than have more than 5 times median number of files affected
-		for(Commit commit: this.commits) {
-			if(potentiallyBugFixing(commit) && !(commit.getFiles().size() > outlier)) 
+		for(Commit commit: this.commits) {			
+			if(potentiallyBugFixing(commit) && !(commit.getFiles().size() > outlier))
 				this.bugFixingCommits.add(commit);		
 		}	
 		

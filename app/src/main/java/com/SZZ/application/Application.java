@@ -76,14 +76,6 @@ public class Application {
 		
 		//Experiments exp = new Experiments(commits, bugFixingCommits, bugIntroducingCommits);
 		
-		
-//		//Days of the week calculated using epoch --> day formula
-//		int[] days = new int[7];
-//		for(int i = 0; i < days.length; i++) days[i] = 0;
-//		for(Link link: bugIntroducingCommits) {
-//			for (Suspect suspect : link.getBugIntroducingCommits().values()) {
-//				days[(int)(Math.floor(suspect.getDate() / 86400) + 4) % 7] ++;
-//			}
-//		}	
+
 	}
 }

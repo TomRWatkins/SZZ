@@ -34,7 +34,8 @@ public class Experiments {
 		values = new ArrayList<>();
 		fixInducingCommitsList = new ArrayList<>();
 		createHashMaps();
-		calculateFileSizes();		
+		//calculateFileSizes();		
+		calculateDays();
 	}
 	
 	private void createHashMaps() {
@@ -62,6 +63,150 @@ public class Experiments {
 			this.fixInducingCommitsList.add(entry.getValue());		  
 		}
 	}
+	
+//	case 0: System.out.println("Sun"); 
+//	case 1: System.out.println("Mon"); 
+//	case 2: System.out.println("Tues"); 
+//	case 3: System.out.println("Weds"); 
+//	case 4: System.out.println("Thu"); 
+//	case 5: System.out.println("Fri"); 
+//	case 6: System.out.println("Sat"); 
+	
+	private void calculateDays() {
+		//baseline
+		double[] days = new double[7];
+		for(int i = 0; i < days.length; i++) {
+			days[i] = 0;
+		}		
+		for(Commit c: allCommits) {
+			days[(int)(Math.floor(c.getTimeStamp() / 86400) + 4) % 7] +=1;			
+		}
+		
+		//Row one
+		double[] daysRowOne = new double[7];
+		for(int i = 0; i < daysRowOne.length; i++ ) {
+			daysRowOne[i] = 0;
+		}		
+		for(Link l : bugFixingCommits) {
+			daysRowOne[(int)(Math.floor(l.getCommit().getTimeStamp() / 86400) + 4) % 7] +=1;
+		}
+		System.out.println("Sun Mon Tue Wed Thu Fri Sat");
+		double[] resOne = new double[7];
+		for(int i = 0; i < 7; i++) {
+			resOne[i] = (daysRowOne[i]);
+			//resOne[i] = (daysRowOne[i] / days[i]) * 100;
+			System.out.print(resOne[i] + " ");
+		}
+		System.out.println();
+
+		//Row Two
+		double[] daysRowTwo = new double[7];
+		for(int i = 0; i < daysRowTwo.length; i++ ) {
+			daysRowTwo[i] = 0;
+		}		
+		for(Commit c : fixInducingCommitsList) {
+			daysRowTwo[(int)(Math.floor(c.getTimeStamp() / 86400) + 4) % 7] +=1;
+		}
+		System.out.println("Sun Mon Tue Wed Thu Fri Sat");
+		double[] resTwo = new double[7];
+		for(int i = 0; i < 7; i++) {
+			resTwo[i] = (daysRowTwo[i]);
+			//resTwo[i] = (daysRowTwo[i] / days[i]) * 100;
+			System.out.print(resTwo[i] + " ");
+		}
+		System.out.println();
+		
+		//Row Three
+		double[] daysRowThree = new double[7];
+		for(int i = 0; i < daysRowThree.length; i++ ) {
+			daysRowThree[i] = 0;
+		}	
+		for(Commit c : fixInducingCommitsList) {
+			if(bugFixingCommitsHash.get(c.getHash()) !=  null) {
+				daysRowThree[(int)(Math.floor(c.getTimeStamp() / 86400) + 4) % 7] +=1;
+			}
+		}
+		System.out.println("Sun Mon Tue Wed Thu Fri Sat");
+		double[] resThree = new double[7];
+		for(int i = 0; i < 7; i++) {
+			resThree[i] = (daysRowThree[i]);
+			//resThree[i] = (daysRowThree[i] / days[i]) * 100;
+			System.out.print(resThree[i] + " ");
+		}
+		System.out.println();
+		
+		//Row Four
+		double[] daysRowFour = new double[7];
+		for(int i = 0; i < daysRowFour.length; i++ ) {
+			daysRowFour[i] = 0;
+		}	
+		for(Commit c: allCommits) {
+			if(bugFixingCommitsHash.get(c.getHash()) == null && fixInducingCommitsHash.get(c.getHash()) == null)
+				daysRowFour[(int)(Math.floor(c.getTimeStamp() / 86400) + 4) % 7] +=1;			
+		}
+		System.out.println("Sun Mon Tue Wed Thu Fri Sat");
+		double[] resFour = new double[7];
+		for(int i = 0; i < 7; i++) {
+			resFour[i] = (daysRowFour[i]);
+			//resFour[i] = (daysRowFour[i] / days[i]) * 100;
+			System.out.print(resFour[i] + " ");
+		}
+		System.out.println();
+		
+		
+		//Row Five
+		double[] fixDays = new double[7];
+		for(int i = 0; i < days.length; i++) {
+			fixDays[i] = 0;
+		}	
+		for(Link l: bugFixingCommits) {
+			fixDays[(int)(Math.floor(l.getCommit().getTimeStamp() / 86400) + 4) % 7] +=1;
+		}
+		double[] daysRowFive = new double[7];
+		for(int i = 0; i < daysRowFive.length; i++ ) {
+			daysRowFive[i] = 0;
+		}	
+		for(Link l: bugFixingCommits) {
+			if(fixInducingCommitsHash.get(l.getCommit().getHash()) != null)
+				daysRowFive[(int)(Math.floor(l.getCommit().getTimeStamp() / 86400) + 4) % 7] +=1;
+		}
+		System.out.println("Sun Mon Tue Wed Thu Fri Sat");
+		double[] resFive = new double[7];
+		for(int i = 0; i < 7; i++) {
+			resFive[i] = (daysRowFive[i] / fixDays[i]) * 100;
+			System.out.print(resFive[i] + " ");
+		}
+		System.out.println();
+		
+		
+		//Row Six
+		double[] nonFixDays = new double[7];
+		for(int i = 0; i < nonFixDays.length; i++) {
+			nonFixDays[i] = 0;
+		}
+		for(Commit c: allCommits) {
+			if(bugFixingCommitsHash.get(c.getHash()) == null)
+				nonFixDays[(int)(Math.floor(c.getTimeStamp() / 86400) + 4) % 7] +=1;
+		}
+		double[] daysRowSix = new double[7];
+		for(int i = 0; i < daysRowSix.length; i++ ) {
+			daysRowSix[i] = 0;
+		}	
+		for(Commit c: allCommits) {
+			if(bugFixingCommitsHash.get(c.getHash()) == null)
+				if(fixInducingCommitsHash.get(c.getHash()) != null)
+					daysRowSix[(int)(Math.floor(c.getTimeStamp() / 86400) + 4) % 7] +=1;
+		}
+		System.out.println("Sun Mon Tue Wed Thu Fri Sat");
+		double[] resSix = new double[7];
+		for(int i = 0; i < 7; i++) {
+			resSix[i] = (daysRowSix[i] / nonFixDays[i]) * 100;
+			System.out.print(resSix[i] + " ");
+		}
+		System.out.println();
+		
+	}
+	
 	
 	private ArrayList<Commit> acquireAffectedFiles(ArrayList<Commit> commits) {
 		int CORES = Runtime.getRuntime().availableProcessors();

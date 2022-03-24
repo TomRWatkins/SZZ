@@ -81,7 +81,7 @@ public class Link {
 				
 				//Filter each line then potentially add a suspect
 				for(BlameLine line: blamedLines) {					
-					if(this.bugIntroducingCommits.get(line.getHash()) != null) break;	// TAKE OUT TO COUNT LINES			
+					if(this.bugIntroducingCommits.get(line.getHash()) != null) break;			
 					if(line.getDate() > this.bug.getCreatedDate()) break;
 					if(this.getCommit().getTimeStamp() - line.getDate() > 63000000) break;
 					String regex = "^\\/\\/.*|^\\*.*|^\\/\\*.*|^\\s*\\/\\/.*|^\\s*\\*.*|^\\s*\\/\\*.*";					

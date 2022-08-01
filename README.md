@@ -3,7 +3,7 @@
 
 This implementation of the SZZ algorithm builds upon the original algorithm developed by Śliwerski et al's in "When Do Changes Induce Fixes?". I utilise recent suggestions within the surrounding literature to improve the original algorithm and subsequently better the localisation of fix inducing commits.
 
-This project was undertaken for my Undergraduate disseration thesis at Lancaster University. 
+This project was undertaken for my Undergraduate disseration thesis at Lancaster University (Achieved grade 80%). 
 
 
 
@@ -44,6 +44,7 @@ To run this project on Windows
 ```
 
 
+Link to my thesis: https://drive.google.com/file/d/1XCrh4jqaIlP5S7LNGW3t3X6Q5oRxFYLB/view?usp=sharing
 
 Thomas Watkins
 

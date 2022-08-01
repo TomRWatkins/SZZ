@@ -74,8 +74,5 @@ public class Application {
 		}
 		System.out.println("Total Fix Inducing Commits: " + fixInducingCommits.size());
 		
-		//Experiments exp = new Experiments(commits, bugFixingCommits, bugIntroducingCommits);
-		
-
 	}
 }

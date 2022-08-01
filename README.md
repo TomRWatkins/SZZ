@@ -44,6 +44,7 @@ To run this project on Windows
 ```
 
 
+Link to my thesis: https://drive.google.com/file/d/1XCrh4jqaIlP5S7LNGW3t3X6Q5oRxFYLB/view?usp=sharing
 
 Thomas Watkins
 
